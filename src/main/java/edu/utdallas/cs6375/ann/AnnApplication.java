@@ -64,11 +64,6 @@ public class AnnApplication {
     }
 
     private static void processArgs(String[] args) {
-        if(args.length < 1) {
-            System.out.println("Expects absolute filepath to data csv file as first argument.");
-            System.exit(1);
-        }
-
         for(int i = 0; i < args.length - 1; i++) {
             switch(args[i]) {
                 case "--filePath":
@@ -91,6 +86,11 @@ public class AnnApplication {
                 default:
                     System.out.println("Unknown option: " + args[i]);
             }
+        }
+
+        if(dataFilepath == null) {
+            System.out.println("Expects absolute filepath to data csv file as CLI argument: --filePath <absolute_path>");
+            System.exit(1);
         }
     }
 }

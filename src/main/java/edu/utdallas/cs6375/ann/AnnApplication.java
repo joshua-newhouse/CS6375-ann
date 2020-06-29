@@ -90,10 +90,19 @@ public class AnnApplication {
                     ActivationService.setActivationFunctionName(args[++i]);
                     break;
                 case "--hidden-layers":
-                    hiddenLayers = Integer.parseInt(args[++i]);
+                    try {
+                        hiddenLayers = Integer.parseInt(args[++i]);
+                    } catch(Exception e) {
+                        System.out.println("Could not parse hidden-layers: " + e.toString());
+                    }
                     break;
                 case "--layer-width":
-                    layerWidth = Integer.parseInt(args[++i]);
+                    try {
+                        layerWidth = Integer.parseInt(args[++i]);
+                    } catch(Exception e) {
+                        System.out.println("Could not parse layer-width: " + e.toString());
+                    }
+                    break;
                 default:
                     System.out.println("Unknown option: " + args[i]);
             }

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ArtificialNeuralNetwork {
-    private static final int layerWidth = 4;
+    private final int layerWidth;
 
     private double alpha;
 
@@ -18,8 +18,10 @@ public class ArtificialNeuralNetwork {
 
     public ArtificialNeuralNetwork(double alpha,
                                    int inputs,
-                                   int hiddenLayers) throws ANNException {
+                                   int hiddenLayers,
+                                   int layerWidth) throws ANNException {
         this.alpha = alpha;
+        this.layerWidth = layerWidth;
         initializeHiddenLayers(hiddenLayers);
         initializeOutputLayer();
         initializeInputLayer(inputs);

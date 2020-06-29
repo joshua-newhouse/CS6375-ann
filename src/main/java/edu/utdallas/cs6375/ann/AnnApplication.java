@@ -12,6 +12,8 @@ public class AnnApplication {
     private static String dataFilepath;
     private static int iterations = 1000;
     private static double alpha = 100.0;
+    private static int hiddenLayers = 2;
+    private static int layerWidth = 5;
     private static int correctPredictions;
 
     public static void main(String[] args) {
@@ -26,7 +28,7 @@ public class AnnApplication {
         try {
             /* Create ANN */
             ArtificialNeuralNetwork ann;
-            ann = new ArtificialNeuralNetwork(alpha, 13, 1);
+            ann = new ArtificialNeuralNetwork(alpha, 13, hiddenLayers, layerWidth);
 
             /* Process training data */
             for(; iterations > 0; iterations--) {
@@ -87,6 +89,11 @@ public class AnnApplication {
                 case "--activation-function":
                     ActivationService.setActivationFunctionName(args[++i]);
                     break;
+                case "--hidden-layers":
+                    hiddenLayers = Integer.parseInt(args[++i]);
+                    break;
+                case "--layer-width":
+                    layerWidth = Integer.parseInt(args[++i]);
                 default:
                     System.out.println("Unknown option: " + args[i]);
             }

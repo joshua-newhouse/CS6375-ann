@@ -34,9 +34,9 @@ public abstract class NetworkNeuron extends Neuron {
     public void calculateOutput() {
         this.output = 0.0;
 
-        inputNeuronWeights.forEach((neuron, weight) -> {
-            this.output += neuron.getOutput() * weight;
-        });
+        inputNeuronWeights.forEach((neuron, weight) ->
+                this.output += neuron.getOutput() * weight
+        );
 
         this.output = activationFunction.apply(this.output);
     }
@@ -50,4 +50,18 @@ public abstract class NetworkNeuron extends Neuron {
     }
 
     public abstract void calculateDelta(double target);
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("value = ").append(this.output)
+                .append(" delta = ").append(this.delta)
+                .append("\n----- WEIGHTS -----\n");
+
+        inputNeuronWeights.forEach((n, weight) ->
+                sb.append(weight).append("; ")
+        );
+
+        return sb.append("\n").toString();
+    }
 }

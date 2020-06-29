@@ -13,4 +13,9 @@ public class OutputNeuron extends NetworkNeuron {
     @Override
     protected void addDownstreamNeuron(NetworkNeuron neuron) {
     }
+
+    @Override
+    public String toString() {
+        return "OUTPUT_NEURON:\n" + super.toString();
+    }
 }

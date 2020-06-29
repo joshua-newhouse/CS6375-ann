@@ -9,6 +9,15 @@ public abstract class Layer<N extends Neuron> {
     protected List<N> neurons = new ArrayList<>();
 
     public void addNextLayer(NetworkLayer next) {
-        this.neurons.forEach(neuron -> next.addInputNeuron(neuron));
+        this.neurons.forEach(next::addInputNeuron);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        neurons.forEach(n -> sb.append(n.toString()).append("\n"));
+
+        return sb.toString();
     }
 }

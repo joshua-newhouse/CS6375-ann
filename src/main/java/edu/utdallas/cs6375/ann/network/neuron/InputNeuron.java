@@ -6,4 +6,9 @@ public class InputNeuron extends Neuron {
     public void setValue(double value) {
         this.output = value;
     }
+
+    @Override
+    public String toString() {
+        return "INPUT_NEURON: value = " + this.output;
+    }
 }

@@ -5,7 +5,7 @@ import java.util.List;
 
 public abstract class Neuron {
     protected double output;
-    private List<NetworkNeuron> downstreamNeurons = new ArrayList<>();
+    private final List<NetworkNeuron> downstreamNeurons = new ArrayList<>();
 
     public double getOutput() {
         return output;

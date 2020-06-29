@@ -12,4 +12,9 @@ public class HiddenNeuron extends NetworkNeuron {
                                              .mapToDouble(n -> n.getWeightForInputNeuron(this) * n.getDelta())
                                              .sum();
     }
+
+    @Override
+    public String toString() {
+        return "HIDDEN_NEURON:\n" + super.toString();
+    }
 }

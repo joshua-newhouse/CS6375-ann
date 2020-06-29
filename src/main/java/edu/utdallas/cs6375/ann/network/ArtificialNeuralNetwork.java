@@ -83,4 +83,14 @@ public class ArtificialNeuralNetwork {
     public boolean isPredictionGood() {
         return this.target * outputLayer.getOutput() > 0.0;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(String.format("Input Layer:\n%s\n", inputLayer.toString()));
+        layers.forEach(layer -> sb.append(String.format("Layer:\n%s\n", layer.toString())));
+
+        return sb.toString();
+    }
 }

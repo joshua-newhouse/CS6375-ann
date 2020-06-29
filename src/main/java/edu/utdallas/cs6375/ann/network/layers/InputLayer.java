@@ -22,5 +22,9 @@ public class InputLayer extends Layer<InputNeuron> {
                             inputs.size(), neurons.size() - 1)
             );
         }
+
+        for(int i = 0; i < inputs.size(); i++) {
+            neurons.get(i).setValue(inputs.get(i));
+        }
     }
 }

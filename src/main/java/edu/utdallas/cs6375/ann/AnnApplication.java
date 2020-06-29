@@ -5,13 +5,14 @@ import edu.utdallas.cs6375.ann.data.DataSet;
 import edu.utdallas.cs6375.ann.network.ANNException;
 import edu.utdallas.cs6375.ann.network.ActivationService;
 import edu.utdallas.cs6375.ann.network.ArtificialNeuralNetwork;
+import edu.utdallas.cs6375.ann.network.neuron.NeuronWeightGenerator;
 
 import java.util.List;
 
 public class AnnApplication {
     private static String dataFilepath;
     private static int iterations = 1000;
-    private static double alpha = 100.0;
+    private static double alpha = 1.0;
     private static int hiddenLayers = 2;
     private static int layerWidth = 5;
     private static int correctPredictions;
@@ -31,7 +32,10 @@ public class AnnApplication {
             ann = new ArtificialNeuralNetwork(alpha, 13, hiddenLayers, layerWidth);
 
             /* Process training data */
+            int epochs = iterations;
             for(; iterations > 0; iterations--) {
+                System.out.println(String.format("Beginning Epoch %d", epochs - iterations));
+
                 trainingData.forEach(dataPoint -> {
                     try {
                         ann.setInput(dataPoint.asInputsList(), dataPoint.target());
@@ -101,6 +105,20 @@ public class AnnApplication {
                         layerWidth = Integer.parseInt(args[++i]);
                     } catch(Exception e) {
                         System.out.println("Could not parse layer-width: " + e.toString());
+                    }
+                    break;
+                case "--weight-upper-bound":
+                    try {
+                        NeuronWeightGenerator.setUpperBound(Double.parseDouble(args[++i]));
+                    } catch(Exception e) {
+                        System.out.println("Could not parse weight-upper-bound: " + e.toString());
+                    }
+                    break;
+                case "--weight-lower-bound":
+                    try {
+                        NeuronWeightGenerator.setLowerBound(Double.parseDouble(args[++i]));
+                    } catch(Exception e) {
+                        System.out.println("Could not parse weight-lower-bound: " + e.toString());
                     }
                     break;
                 default:

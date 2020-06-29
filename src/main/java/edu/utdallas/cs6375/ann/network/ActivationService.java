@@ -3,7 +3,7 @@ package edu.utdallas.cs6375.ann.network;
 import edu.utdallas.cs6375.ann.network.neuron.NetworkNeuron;
 
 public class ActivationService {
-    private static String activationFunctionName;
+    private static String activationFunctionName = "sigmoid";
 
     private ActivationService() {
     }

@@ -22,14 +22,11 @@ public class ActivationService {
     public static NetworkNeuron.ActivationFunction getAFPrime() {
         switch(activationFunctionName) {
             case "tanh":
-                return (num) -> {
-                    double tnh = Math.tanh(num);
-                    return 1 - tnh * tnh;
-                };
+                return (o) -> 1 - o * o;
             case "relu":
-                return (num) -> num < 0.0 ? 0.0 : 1;
+                return (o) -> o < 0.0 ? 0.0 : 1;
             default:
-                return (num) -> num * (1.0 - num);
+                return (o) -> o * (1.0 - o);
         }
     }
 

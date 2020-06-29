@@ -34,7 +34,7 @@ public class AnnApplication {
             /* Process training data */
             int epochs = iterations;
             for(; iterations > 0; iterations--) {
-                System.out.println(String.format("Beginning Epoch %d", epochs - iterations));
+                System.out.printf("Epoch %d%n", epochs - iterations);
 
                 trainingData.forEach(dataPoint -> {
                     try {
@@ -66,10 +66,10 @@ public class AnnApplication {
             System.exit(1);
         }
 
-        System.out.println(String.format("Correct predictions: %d\nTotal predictions: %d\nAccuracy: %f\n",
+        System.out.printf("Correct predictions: %d\nTotal predictions: %d\nAccuracy: %f\n%n",
                 correctPredictions,
                 testingData.size(),
-                (double) correctPredictions / (double) testingData.size()));
+                (double) correctPredictions / (double) testingData.size());
     }
 
     private static void processArgs(String[] args) {

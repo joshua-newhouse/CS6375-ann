@@ -1,6 +1,6 @@
 # CS6375-ann
 
-Artificial neutal network program
+### Artificial neutal network program
 
 Used the following dataset as input
 https://archive.ics.uci.edu/ml/machine-learning-databases/adult/adult.data

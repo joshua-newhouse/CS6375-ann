@@ -33,7 +33,7 @@ public class DataSet {
                 try {
                     dataSet.add(new DataPoint(rawDataPoint));
                 } catch (DataException e) {
-                    System.out.println(String.format("Failed creating data point: %s", e.toString()));
+//                    System.out.println(String.format("Failed creating data point: %s", e.toString()));
                 }
             }
         } catch (IOException e) {

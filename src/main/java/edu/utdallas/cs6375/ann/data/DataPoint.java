@@ -2,6 +2,9 @@ package edu.utdallas.cs6375.ann.data;
 
 import edu.utdallas.cs6375.ann.data.enumeratedtypes.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DataPoint {
     private static final int AGE_IDX = 0;
     private static final int WKC_IDX = 1;
@@ -51,7 +54,7 @@ public class DataPoint {
             this.country = Country.getCountry(rawData[CTY_IDX].trim());
             this.salaryGreaterThan50 = rawData[SAL_IDX].trim().equals(GT_THN_50);
 
-        } catch (NumberFormatException e) {
+        } catch(NumberFormatException e) {
             throw new DataException(e);
         }
     }
@@ -112,21 +115,45 @@ public class DataPoint {
         return salaryGreaterThan50;
     }
 
+    public List<Double> asInputsList() {
+        ArrayList<Double> retVal = new ArrayList<>();
+
+        retVal.add((double) this.getAge());
+        retVal.add((double) this.getWorkClass().getWorkclassValue());
+        retVal.add((double) this.getFnlwgt());
+        retVal.add((double) this.getEducation().getEducationValue());
+        retVal.add((double) this.getMaritalStatus().getMaritalStatusValue());
+        retVal.add((double) this.getOccupation().getOccupationValue());
+        retVal.add((double) this.getRelationship().getRelationshipValue());
+        retVal.add((double) this.getRace().getRaceValue());
+        retVal.add((double) this.getSex().getSexValue());
+        retVal.add((double) this.getCapitalGain());
+        retVal.add((double) this.getCapitalLoss());
+        retVal.add((double) this.getHoursPerWeek());
+        retVal.add((double) this.getCountry().getCountryValue());
+
+        return retVal;
+    }
+
+    public double target() {
+        return this.isSalaryGreaterThan50() ? 1.0 : -1.0;
+    }
+
     @Override
     public String toString() {
         return "Age: " + this.getAge()
-            + " :: Workclass: " + this.getWorkClass().toString()
-            + " :: Final Weight: " + this.getFnlwgt()
-            + " :: Education: " + this.getEducation().toString()
-            + " :: Marital Status: " + this.getMaritalStatus().toString()
-            + " :: Occupation: " + this.getOccupation().toString()
-            + " :: Relationship: " + this.getRelationship().toString()
-            + " :: Race: " + this.getRace().toString()
-            + " :: Sex: " + this.getSex().toString()
-            + " :: Capital Gain: " + this.getCapitalGain()
-            + " :: Capital Loss: " + this.getCapitalLoss()
-            + " :: Hours per week: " + this.getHoursPerWeek()
-            + " :: Country: " + this.getCountry().toString()
-            + " :: Salary > 50K? " + this.isSalaryGreaterThan50();
+                + " :: Workclass: " + this.getWorkClass().toString()
+                + " :: Final Weight: " + this.getFnlwgt()
+                + " :: Education: " + this.getEducation().toString()
+                + " :: Marital Status: " + this.getMaritalStatus().toString()
+                + " :: Occupation: " + this.getOccupation().toString()
+                + " :: Relationship: " + this.getRelationship().toString()
+                + " :: Race: " + this.getRace().toString()
+                + " :: Sex: " + this.getSex().toString()
+                + " :: Capital Gain: " + this.getCapitalGain()
+                + " :: Capital Loss: " + this.getCapitalLoss()
+                + " :: Hours per week: " + this.getHoursPerWeek()
+                + " :: Country: " + this.getCountry().toString()
+                + " :: Salary > 50K? " + this.isSalaryGreaterThan50();
     }
 }

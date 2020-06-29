@@ -71,7 +71,7 @@ public class ArtificialNeuralNetwork {
     }
 
     public void backwardPropagate() {
-        for(int i = layers.size() - 1; i > 0; i--) {
+        for(int i = layers.size() - 1; i >= 0; i--) {
             layers.get(i).calculateDeltas(this.target);
         }
     }

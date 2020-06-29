@@ -48,6 +48,8 @@ public class AnnApplication {
                 });
             }
 
+            System.out.println(ann.toString());
+
             /* Validate against testing data */
             testingData.forEach(dataPoint -> {
                 try {

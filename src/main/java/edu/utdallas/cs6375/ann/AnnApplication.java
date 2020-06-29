@@ -3,6 +3,7 @@ package edu.utdallas.cs6375.ann;
 import edu.utdallas.cs6375.ann.data.DataPoint;
 import edu.utdallas.cs6375.ann.data.DataSet;
 import edu.utdallas.cs6375.ann.network.ANNException;
+import edu.utdallas.cs6375.ann.network.ActivationService;
 import edu.utdallas.cs6375.ann.network.ArtificialNeuralNetwork;
 
 import java.util.List;
@@ -66,7 +67,7 @@ public class AnnApplication {
     private static void processArgs(String[] args) {
         for(int i = 0; i < args.length - 1; i++) {
             switch(args[i]) {
-                case "--filePath":
+                case "--file-path":
                     dataFilepath = args[++i];
                     break;
                 case "--iterations":
@@ -83,13 +84,16 @@ public class AnnApplication {
                         System.out.println("Could not parse alpha: " + e.toString());
                     }
                     break;
+                case "--activation-function":
+                    ActivationService.setActivationFunctionName(args[++i]);
+                    break;
                 default:
                     System.out.println("Unknown option: " + args[i]);
             }
         }
 
         if(dataFilepath == null) {
-            System.out.println("Expects absolute filepath to data csv file as CLI argument: --filePath <absolute_path>");
+            System.out.println("Expects absolute filepath to data csv file as CLI argument: --file-path <absolute_path>");
             System.exit(1);
         }
     }

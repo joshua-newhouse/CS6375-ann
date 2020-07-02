@@ -51,8 +51,9 @@ public class ArtificialNeuralNetwork {
             throw new ANNException("Invalid number of hidden layers: " + num);
         }
 
-        for(; num > 0; num--) {
-            layers.add(new HiddenLayer(layerWidth));
+        for(int i = 0; i < num; i++) {
+            HiddenLayer next = new HiddenLayer(layerWidth, Integer.toString(i));
+            layers.add(next);
         }
     }
 

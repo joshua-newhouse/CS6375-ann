@@ -1,8 +1,9 @@
 package edu.utdallas.cs6375.ann.network.neuron;
 
 public class HiddenNeuron extends NetworkNeuron {
-    public HiddenNeuron(ActivationFunction af, ActivationFunction afPrime) {
+    public HiddenNeuron(ActivationFunction af, ActivationFunction afPrime, String ID) {
         super(af, afPrime);
+        this.setID("HiddenNeuron" + ID);
     }
 
     @Override

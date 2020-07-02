@@ -1,8 +1,9 @@
 package edu.utdallas.cs6375.ann.network.neuron;
 
 public class OutputNeuron extends NetworkNeuron {
-    public OutputNeuron(ActivationFunction af, ActivationFunction afPrime) {
+    public OutputNeuron(ActivationFunction af, ActivationFunction afPrime, String ID) {
         super(af, afPrime);
+        setID("OutputNeuron" + ID);
     }
 
     @Override
@@ -16,6 +17,6 @@ public class OutputNeuron extends NetworkNeuron {
 
     @Override
     public String toString() {
-        return "OUTPUT_NEURON:\n" + super.toString();
+        return ID + ":\n" + super.toString();
     }
 }

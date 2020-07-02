@@ -1,7 +1,9 @@
 package edu.utdallas.cs6375.ann.network.neuron;
 
 public class InputNeuron extends Neuron {
-    public InputNeuron() {}
+    public InputNeuron(String ID) {
+        setID("IntputNeuron" + ID);
+    }
 
     public void setValue(double value) {
         this.output = value;
@@ -9,6 +11,6 @@ public class InputNeuron extends Neuron {
 
     @Override
     public String toString() {
-        return "INPUT_NEURON: value = " + this.output;
+        return ID + ": value = " + this.output;
     }
 }

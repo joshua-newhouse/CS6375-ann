@@ -7,6 +7,15 @@
     <groupId>org.example</groupId>
     <artifactId>cs6375-ann</artifactId>
     <version>1.0-SNAPSHOT</version>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-s3</artifactId>
+            <version>1.11.813</version>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>
@@ -19,6 +28,5 @@
             </plugin>
         </plugins>
     </build>
-
 
 </project>

@@ -2,6 +2,7 @@ package edu.utdallas.cs6375.ann.network.layers;
 
 import edu.utdallas.cs6375.ann.network.neuron.NetworkNeuron;
 import edu.utdallas.cs6375.ann.network.neuron.Neuron;
+import edu.utdallas.cs6375.ann.network.neuron.NeuronException;
 
 public abstract class NetworkLayer extends Layer<NetworkNeuron> {
     public void addInputNeuron(Neuron n) {

@@ -9,6 +9,10 @@ public class OutputNeuron extends NetworkNeuron {
     @Override
     public void calculateDelta(double target) {
         this.delta = (target - this.output) * this.afDerivative.apply(this.output);
+
+        if(Double.isInfinite(this.delta) || Double.isNaN(this.delta)) {
+            throw new NeuronException(ID + ": delta is infinite or not a number");
+        }
     }
 
     @Override

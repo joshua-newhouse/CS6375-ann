@@ -171,7 +171,7 @@ public class DataPoint {
     }
 
     public double target() {
-        return this.isSalaryGreaterThan50() ? 1.0 : -1.0;
+        return this.isSalaryGreaterThan50() ? 1.0 : 0.0;
     }
 
     @Override

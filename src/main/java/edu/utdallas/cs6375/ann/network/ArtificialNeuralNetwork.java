@@ -19,10 +19,11 @@ public class ArtificialNeuralNetwork {
     public ArtificialNeuralNetwork(double alpha,
                                    int inputs,
                                    int hiddenLayers,
-                                   int layerWidth) throws ANNException {
+                                   int layerWidth,
+                                   String activationFunction) throws ANNException {
         this.alpha = alpha;
         this.layerWidth = layerWidth;
-        initializeHiddenLayers(hiddenLayers);
+        initializeHiddenLayers(hiddenLayers, activationFunction);
         initializeOutputLayer();
         initializeInputLayer(inputs);
 
@@ -46,13 +47,13 @@ public class ArtificialNeuralNetwork {
         this.outputLayer = new OutputLayer();
     }
 
-    public void initializeHiddenLayers(int num) throws ANNException {
+    public void initializeHiddenLayers(int num, String activationFunction) throws ANNException {
         if(num < 0) {
             throw new ANNException("Invalid number of hidden layers: " + num);
         }
 
         for(int i = 0; i < num; i++) {
-            HiddenLayer next = new HiddenLayer(layerWidth, Integer.toString(i));
+            HiddenLayer next = new HiddenLayer(layerWidth, Integer.toString(i), activationFunction);
             layers.add(next);
         }
     }
@@ -82,7 +83,9 @@ public class ArtificialNeuralNetwork {
     }
 
     public boolean isPredictionGood() {
-        return this.target * outputLayer.getOutput() > 0.0;
+        double o = outputLayer.getOutput();
+        double prediction = Math.abs(o - 1.0) < Math.abs(o) ? 1.0 : 0.0;
+        return this.target == prediction;
     }
 
     @Override

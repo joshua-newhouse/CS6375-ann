@@ -43,6 +43,10 @@ public abstract class NetworkNeuron extends Neuron {
 
 //        System.out.println(ID + ": net = " + this.output);
         this.output = activationFunction.apply(this.output);
+
+        if(Double.isInfinite(this.output) || Double.isNaN(this.output)) {
+            throw new NeuronException(ID + ": output is infinite or not a number");
+        }
     }
 
     public void updateWeights(double alpha) {

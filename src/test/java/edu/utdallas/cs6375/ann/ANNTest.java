@@ -13,9 +13,8 @@ public class ANNTest {
         NeuronWeightGenerator.setSeed(1);
         NeuronWeightGenerator.setUpperBound(1.0);
         NeuronWeightGenerator.setLowerBound(0.0);
-        ActivationService.setActivationFunctionName("relu");
 
-        ArtificialNeuralNetwork ann = new ArtificialNeuralNetwork(0.5, 2, 1, 2);
+        ArtificialNeuralNetwork ann = new ArtificialNeuralNetwork(0.5, 2, 1, 2, "relu");
 
         List<Double> inputs = Arrays.asList(0.05, 0.10);
         ann.setInput(inputs, 1.0);

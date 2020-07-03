@@ -5,6 +5,7 @@ import edu.utdallas.cs6375.ann.data.DataSet;
 import edu.utdallas.cs6375.ann.network.ANNException;
 import edu.utdallas.cs6375.ann.network.ActivationService;
 import edu.utdallas.cs6375.ann.network.ArtificialNeuralNetwork;
+import edu.utdallas.cs6375.ann.network.neuron.NeuronException;
 import edu.utdallas.cs6375.ann.network.neuron.NeuronWeightGenerator;
 
 import java.util.List;
@@ -15,6 +16,7 @@ public class AnnApplication {
     private static double alpha = 1.0;
     private static int hiddenLayers = 2;
     private static int layerWidth = 5;
+    private static String activationFunction = "sigmoid";
     private static int correctPredictions;
 
     public static void main(String[] args) {
@@ -29,7 +31,7 @@ public class AnnApplication {
         try {
             /* Create ANN */
             ArtificialNeuralNetwork ann;
-            ann = new ArtificialNeuralNetwork(alpha, 13, hiddenLayers, layerWidth);
+            ann = new ArtificialNeuralNetwork(alpha, 13, hiddenLayers, layerWidth, activationFunction);
 
             /* Process training data */
             int epochs = iterations;
@@ -44,6 +46,10 @@ public class AnnApplication {
                         ann.updateWeights();
                     } catch(ANNException e) {
                         System.out.println("Failed training data point: " + dataPoint.toString() + " ::: " + e.toString());
+                    } catch(NeuronException e) {
+                        System.out.println(e.toString());
+                        System.out.println(ann.toString());
+                        System.exit(1);
                     }
                 });
             }
@@ -93,7 +99,7 @@ public class AnnApplication {
                     }
                     break;
                 case "--activation-function":
-                    ActivationService.setActivationFunctionName(args[++i]);
+                    activationFunction = args[++i];
                     break;
                 case "--hidden-layers":
                     try {

@@ -5,7 +5,7 @@ import edu.utdallas.cs6375.ann.network.neuron.OutputNeuron;
 
 public class OutputLayer extends NetworkLayer {
     public OutputLayer() {
-        this.neurons.add(new OutputNeuron(ActivationService.getAF(), ActivationService.getAFPrime(), "O"));
+        this.neurons.add(new OutputNeuron(ActivationService.getAF("sigmoid"), ActivationService.getAFPrime("sigmoid"), "O"));
         super.setID("OutputLayer");
     }
 

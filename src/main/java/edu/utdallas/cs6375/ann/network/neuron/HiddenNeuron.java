@@ -12,6 +12,10 @@ public class HiddenNeuron extends NetworkNeuron {
                 * this.getDownstreamNeurons().stream()
                                              .mapToDouble(n -> n.getWeightForInputNeuron(this) * n.getDelta())
                                              .sum();
+
+        if(Double.isInfinite(this.delta) || Double.isNaN(this.delta)) {
+            throw new NeuronException(ID + ": delta is infinite or not a number");
+        }
     }
 
     @Override

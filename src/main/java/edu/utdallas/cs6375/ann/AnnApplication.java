@@ -1,5 +1,8 @@
 package edu.utdallas.cs6375.ann;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.S3Object;
 import edu.utdallas.cs6375.ann.data.DataPoint;
 import edu.utdallas.cs6375.ann.data.DataSet;
 import edu.utdallas.cs6375.ann.network.ANNException;
@@ -8,23 +11,29 @@ import edu.utdallas.cs6375.ann.network.ArtificialNeuralNetwork;
 import edu.utdallas.cs6375.ann.network.neuron.NeuronException;
 import edu.utdallas.cs6375.ann.network.neuron.NeuronWeightGenerator;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AnnApplication {
-    private static String dataFilepath;
     private static int iterations = 1000;
     private static double alpha = 1.0;
     private static int hiddenLayers = 2;
     private static int layerWidth = 5;
     private static String activationFunction = "sigmoid";
     private static int correctPredictions;
+    private static String BUCKET_NAME = "cs6375-vxs190040";
+    private static String FILE_NAME = "adult.data";
 
     public static void main(String[] args) {
+        Collection<String> inputDataSet = readS3File();
         processArgs(args);
-
         /* Read data */
-        DataSet dataSet = new DataSet(dataFilepath);
-        dataSet.init();
+        DataSet dataSet = new DataSet();
+        dataSet.init(inputDataSet);
         List<DataPoint> trainingData = dataSet.getTrainingData();
         List<DataPoint> testingData = dataSet.getTestingData();
 
@@ -81,9 +90,6 @@ public class AnnApplication {
     private static void processArgs(String[] args) {
         for(int i = 0; i < args.length - 1; i++) {
             switch(args[i]) {
-                case "--file-path":
-                    dataFilepath = args[++i];
-                    break;
                 case "--iterations":
                     try {
                         iterations = Integer.parseInt(args[++i]);
@@ -133,10 +139,19 @@ public class AnnApplication {
                     System.out.println("Unknown option: " + args[i]);
             }
         }
-
-        if(dataFilepath == null) {
-            System.out.println("Expects absolute filepath to data csv file as CLI argument: --file-path <absolute_path>");
-            System.exit(1);
-        }
     }
+
+    private  static Collection<String> readS3File() {
+            Collection<String> inputDataSet = null;
+            AmazonS3 amazonS3Client = AmazonS3Client.builder()
+                    .withRegion("us-east-1")
+                    .build();
+            final S3Object s3Object = amazonS3Client.getObject(BUCKET_NAME, FILE_NAME);
+            final InputStreamReader streamReader = new InputStreamReader(s3Object.getObjectContent(), StandardCharsets.UTF_8);
+            final BufferedReader reader = new BufferedReader(streamReader);
+            inputDataSet = reader.lines().collect(Collectors.toSet());
+            inputDataSet = inputDataSet.stream().filter(inputData -> inputData != null && !inputData.equals("")).collect(Collectors.toList());
+            return inputDataSet;
+        }
+
 }

@@ -51,9 +51,16 @@ native-country: United-States, Cambodia, England, Puerto-Rico, Canada, Germany, 
 		activation function possible inputs : sigmoid, relu, tanh
 		
 
-- Default options
+- Sample output for this program
 
-		python SkiLearn_Regression_Model.py >> output1.txt
+		Testing Data Correct predictions: 400
+		Total predictions: 300
+		Accuracy: 0.800000
+
+		Training Data Correct predictions: 150
+		Total predictions: 100
+		Accuracy: 0.753247
+
 
 
 

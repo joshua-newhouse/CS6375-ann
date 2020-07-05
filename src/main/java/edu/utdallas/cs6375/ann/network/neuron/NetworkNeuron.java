@@ -1,11 +1,12 @@
 package edu.utdallas.cs6375.ann.network.neuron;
 
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /* Acts as both hidden neurons and output neurons */
 public abstract class NetworkNeuron extends Neuron {
-    private final Map<Neuron, Double> inputNeuronWeights = new ConcurrentHashMap<>();
+    private final Map<Neuron, Double> inputNeuronWeights = Collections.synchronizedMap(new LinkedHashMap<>());
     protected double delta;
     protected ActivationFunction activationFunction;
     protected ActivationFunction afDerivative;
@@ -34,15 +35,22 @@ public abstract class NetworkNeuron extends Neuron {
     public void calculateOutput() {
         this.output = 0.0;
 
-        inputNeuronWeights.forEach((neuron, weight) ->
-                this.output += neuron.getOutput() * weight
-        );
+//        System.out.println(ID + ": OUTPUT CALC");
+        inputNeuronWeights.forEach((neuron, weight) -> {
+//                System.out.printf("Neuron: %s, weight: %f%n", neuron.ID, weight);
+                this.output += neuron.getOutput() * weight;
+        });
 
+//        System.out.println(ID + ": net = " + this.output);
         this.output = activationFunction.apply(this.output);
+
+        if(Double.isInfinite(this.output) || Double.isNaN(this.output)) {
+            throw new NeuronException(ID + ": output is infinite or not a number");
+        }
     }
 
     public void updateWeights(double alpha) {
-        inputNeuronWeights.replaceAll((neuron, weight) -> weight - alpha * this.delta * neuron.getOutput());
+        inputNeuronWeights.replaceAll((neuron, weight) -> weight + alpha * this.delta * neuron.getOutput());
     }
 
     public double getDelta() {
@@ -54,7 +62,8 @@ public abstract class NetworkNeuron extends Neuron {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("value = ").append(this.output)
+        sb.append(this.ID).append("\n")
+                .append("value = ").append(this.output)
                 .append(" delta = ").append(this.delta)
                 .append("\n----- WEIGHTS -----\n");
 

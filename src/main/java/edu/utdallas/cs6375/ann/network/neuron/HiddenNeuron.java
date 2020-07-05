@@ -1,8 +1,9 @@
 package edu.utdallas.cs6375.ann.network.neuron;
 
 public class HiddenNeuron extends NetworkNeuron {
-    public HiddenNeuron(ActivationFunction af, ActivationFunction afPrime) {
+    public HiddenNeuron(ActivationFunction af, ActivationFunction afPrime, String ID) {
         super(af, afPrime);
+        this.setID("HiddenNeuron" + ID);
     }
 
     @Override
@@ -11,6 +12,10 @@ public class HiddenNeuron extends NetworkNeuron {
                 * this.getDownstreamNeurons().stream()
                                              .mapToDouble(n -> n.getWeightForInputNeuron(this) * n.getDelta())
                                              .sum();
+
+        if(Double.isInfinite(this.delta) || Double.isNaN(this.delta)) {
+            throw new NeuronException(ID + ": delta is infinite or not a number");
+        }
     }
 
     @Override

@@ -6,11 +6,13 @@ import java.util.List;
 
 public class InputLayer extends Layer<InputNeuron> {
     public InputLayer(int inputs) {
-        for(; inputs > 0; inputs--) {
-            neurons.add(new InputNeuron());
+        super.setID("InputLayer");
+
+        for(int i = 0; i < inputs; i++) {
+            neurons.add(new InputNeuron(Integer.toString(i)));
         }
 
-        InputNeuron bias = new InputNeuron();
+        InputNeuron bias = new InputNeuron("Bias");
         bias.setValue(1);
         neurons.add(bias);
     }

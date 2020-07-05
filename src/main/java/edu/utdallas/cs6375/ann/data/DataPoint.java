@@ -22,6 +22,24 @@ public class DataPoint {
     private static final int SAL_IDX = 14;
     private static final String GT_THN_50 = ">50K";
 
+    private static final NormalizedData[] NORMALIZED_DATA = new NormalizedData[14];
+
+    static {
+        NORMALIZED_DATA[AGE_IDX] = new NormalizedData();
+        NORMALIZED_DATA[WKC_IDX] = new NormalizedData();
+        NORMALIZED_DATA[FLW_IDX] = new NormalizedData();
+        NORMALIZED_DATA[EDU_IDX] = new NormalizedData();
+        NORMALIZED_DATA[MST_IDX] = new NormalizedData();
+        NORMALIZED_DATA[OCC_IDX] = new NormalizedData();
+        NORMALIZED_DATA[REL_IDX] = new NormalizedData();
+        NORMALIZED_DATA[RAC_IDX] = new NormalizedData();
+        NORMALIZED_DATA[SEX_IDX] = new NormalizedData();
+        NORMALIZED_DATA[CPG_IDX] = new NormalizedData();
+        NORMALIZED_DATA[CPL_IDX] = new NormalizedData();
+        NORMALIZED_DATA[HPW_IDX] = new NormalizedData();
+        NORMALIZED_DATA[CTY_IDX] = new NormalizedData();
+    }
+
     private final int age;
     private final WorkClass workClass;
     private final int fnlwgt;
@@ -57,8 +75,25 @@ public class DataPoint {
         } catch(NumberFormatException e) {
             throw new DataException(e);
         }
+
+        this.updateNormalizedData();
     }
 
+    private void updateNormalizedData() {
+        NORMALIZED_DATA[AGE_IDX].add(this.getAge());
+        NORMALIZED_DATA[WKC_IDX].add(this.getWorkClass().getWorkclassValue());
+        NORMALIZED_DATA[FLW_IDX].add(this.getFnlwgt());
+        NORMALIZED_DATA[EDU_IDX].add(this.getEducation().getEducationValue());
+        NORMALIZED_DATA[MST_IDX].add(this.getMaritalStatus().getMaritalStatusValue());
+        NORMALIZED_DATA[OCC_IDX].add(this.getOccupation().getOccupationValue());
+        NORMALIZED_DATA[REL_IDX].add(this.getRelationship().getRelationshipValue());
+        NORMALIZED_DATA[RAC_IDX].add(this.getRace().getRaceValue());
+        NORMALIZED_DATA[SEX_IDX].add(this.getSex().getSexValue());
+        NORMALIZED_DATA[CPG_IDX].add(this.getCapitalGain());
+        NORMALIZED_DATA[CPL_IDX].add(this.getCapitalLoss());
+        NORMALIZED_DATA[HPW_IDX].add(this.getHoursPerWeek());
+        NORMALIZED_DATA[CTY_IDX].add(this.getCountry().getCountryValue());
+    }
     public int getAge() {
         return age;
     }
@@ -118,25 +153,25 @@ public class DataPoint {
     public List<Double> asInputsList() {
         ArrayList<Double> retVal = new ArrayList<>();
 
-        retVal.add((double) this.getAge());
-        retVal.add((double) this.getWorkClass().getWorkclassValue());
-        retVal.add((double) this.getFnlwgt());
-        retVal.add((double) this.getEducation().getEducationValue());
-        retVal.add((double) this.getMaritalStatus().getMaritalStatusValue());
-        retVal.add((double) this.getOccupation().getOccupationValue());
-        retVal.add((double) this.getRelationship().getRelationshipValue());
-        retVal.add((double) this.getRace().getRaceValue());
-        retVal.add((double) this.getSex().getSexValue());
-        retVal.add((double) this.getCapitalGain());
-        retVal.add((double) this.getCapitalLoss());
-        retVal.add((double) this.getHoursPerWeek());
-        retVal.add((double) this.getCountry().getCountryValue());
+        retVal.add(NORMALIZED_DATA[AGE_IDX].getNormalizedForValue(this.getAge()));
+        retVal.add(NORMALIZED_DATA[WKC_IDX].getNormalizedForValue(this.getWorkClass().getWorkclassValue()));
+        retVal.add(NORMALIZED_DATA[FLW_IDX].getNormalizedForValue(this.getFnlwgt()));
+        retVal.add(NORMALIZED_DATA[EDU_IDX].getNormalizedForValue(this.getEducation().getEducationValue()));
+        retVal.add(NORMALIZED_DATA[MST_IDX].getNormalizedForValue(this.getMaritalStatus().getMaritalStatusValue()));
+        retVal.add(NORMALIZED_DATA[OCC_IDX].getNormalizedForValue(this.getOccupation().getOccupationValue()));
+        retVal.add(NORMALIZED_DATA[REL_IDX].getNormalizedForValue(this.getRelationship().getRelationshipValue()));
+        retVal.add(NORMALIZED_DATA[RAC_IDX].getNormalizedForValue(this.getRace().getRaceValue()));
+        retVal.add(NORMALIZED_DATA[SEX_IDX].getNormalizedForValue(this.getSex().getSexValue()));
+        retVal.add(NORMALIZED_DATA[CPG_IDX].getNormalizedForValue(this.getCapitalGain()));
+        retVal.add(NORMALIZED_DATA[CPL_IDX].getNormalizedForValue(this.getCapitalLoss()));
+        retVal.add(NORMALIZED_DATA[HPW_IDX].getNormalizedForValue(this.getHoursPerWeek()));
+        retVal.add(NORMALIZED_DATA[CTY_IDX].getNormalizedForValue(this.getCountry().getCountryValue()));
 
         return retVal;
     }
 
     public double target() {
-        return this.isSalaryGreaterThan50() ? 1.0 : -1.0;
+        return this.isSalaryGreaterThan50() ? 1.0 : 0.0;
     }
 
     @Override

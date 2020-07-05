@@ -7,6 +7,8 @@ public abstract class Neuron {
     protected double output;
     private final List<NetworkNeuron> downstreamNeurons = new ArrayList<>();
 
+    protected String ID = "";
+
     public double getOutput() {
         return output;
     }
@@ -17,5 +19,9 @@ public abstract class Neuron {
 
     protected List<NetworkNeuron> getDownstreamNeurons() {
         return downstreamNeurons;
+    }
+
+    protected void setID(String ID) {
+        this.ID = ID;
     }
 }

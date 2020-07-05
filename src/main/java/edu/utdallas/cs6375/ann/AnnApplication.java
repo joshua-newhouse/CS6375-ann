@@ -6,7 +6,6 @@ import com.amazonaws.services.s3.model.S3Object;
 import edu.utdallas.cs6375.ann.data.DataPoint;
 import edu.utdallas.cs6375.ann.data.DataSet;
 import edu.utdallas.cs6375.ann.network.ANNException;
-import edu.utdallas.cs6375.ann.network.ActivationService;
 import edu.utdallas.cs6375.ann.network.ArtificialNeuralNetwork;
 import edu.utdallas.cs6375.ann.network.neuron.NeuronException;
 import edu.utdallas.cs6375.ann.network.neuron.NeuronWeightGenerator;
@@ -24,9 +23,9 @@ public class AnnApplication {
     private static int hiddenLayers = 2;
     private static int layerWidth = 5;
     private static String activationFunction = "sigmoid";
-    private static int correctPredictions;
-    private static String BUCKET_NAME = "cs6375-vxs190040";
-    private static String FILE_NAME = "adult.data";
+    private static int correctPredictions = 0;
+    private static final String BUCKET_NAME = "cs6375-vxs190040";
+    private static final String FILE_NAME = "adult.data";
 
     public static void main(String[] args) {
         Collection<String> inputDataSet = readS3File();
@@ -63,28 +62,39 @@ public class AnnApplication {
                 });
             }
 
-            System.out.println(ann.toString());
+//            System.out.println(ann.toString());
 
             /* Validate against testing data */
-            testingData.forEach(dataPoint -> {
-                try {
-                    ann.setInput(dataPoint.asInputsList(), dataPoint.target());
-                    ann.forwardPass();
-                    correctPredictions += ann.isPredictionGood() ? 1 : 0;
-                } catch(ANNException e) {
-                    System.out.println("Failed testing data point: " + dataPoint.toString() + " ::: " + e.toString());
-                }
-            });
+            runAgainstDataSet(testingData, "Testing", ann);
+
+            /* Validate against training data */
+            runAgainstDataSet(trainingData, "Training", ann);
 
         } catch(ANNException e) {
             System.out.println("Failed creating network: " + e.toString());
             System.exit(1);
         }
+    }
 
-        System.out.printf("Correct predictions: %d\nTotal predictions: %d\nAccuracy: %f\n%n",
+    private static void runAgainstDataSet(List<DataPoint> dataSet, String dataSetID, ArtificialNeuralNetwork ann) {
+        correctPredictions = 0;
+
+        dataSet.forEach(dataPoint -> {
+            try {
+                ann.setInput(dataPoint.asInputsList(), dataPoint.target());
+                ann.forwardPass();
+                correctPredictions += ann.isPredictionGood() ? 1 : 0;
+            } catch(ANNException e) {
+                System.out.println("Failed testing data point: " + dataPoint.toString() + " ::: " + e.toString());
+            }
+        });
+
+        System.out.printf(dataSetID + " Data Correct predictions: %d\nTotal predictions: %d\nAccuracy: %f\n%n",
                 correctPredictions,
-                testingData.size(),
-                (double) correctPredictions / (double) testingData.size());
+                dataSet.size(),
+                (double) correctPredictions / (double) dataSet.size());
+
+        correctPredictions = 0;
     }
 
     private static void processArgs(String[] args) {
@@ -141,17 +151,17 @@ public class AnnApplication {
         }
     }
 
-    private  static Collection<String> readS3File() {
-            Collection<String> inputDataSet = null;
-            AmazonS3 amazonS3Client = AmazonS3Client.builder()
-                    .withRegion("us-east-1")
-                    .build();
-            final S3Object s3Object = amazonS3Client.getObject(BUCKET_NAME, FILE_NAME);
-            final InputStreamReader streamReader = new InputStreamReader(s3Object.getObjectContent(), StandardCharsets.UTF_8);
-            final BufferedReader reader = new BufferedReader(streamReader);
-            inputDataSet = reader.lines().collect(Collectors.toSet());
-            inputDataSet = inputDataSet.stream().filter(inputData -> inputData != null && !inputData.equals("")).collect(Collectors.toList());
-            return inputDataSet;
-        }
+    private static Collection<String> readS3File() {
+        Collection<String> inputDataSet = null;
+        AmazonS3 amazonS3Client = AmazonS3Client.builder()
+                .withRegion("us-east-1")
+                .build();
+        final S3Object s3Object = amazonS3Client.getObject(BUCKET_NAME, FILE_NAME);
+        final InputStreamReader streamReader = new InputStreamReader(s3Object.getObjectContent(), StandardCharsets.UTF_8);
+        final BufferedReader reader = new BufferedReader(streamReader);
+        inputDataSet = reader.lines().collect(Collectors.toSet());
+        inputDataSet = inputDataSet.stream().filter(inputData -> inputData != null && !inputData.equals("")).collect(Collectors.toList());
+        return inputDataSet;
+    }
 
 }

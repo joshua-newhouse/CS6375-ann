@@ -29,6 +29,8 @@ public class AnnApplication {
 
     public static void main(String[] args) {
         Collection<String> inputDataSet = readS3File();
+        System.out.println("Total number of records from Input File: "+inputDataSet.size());
+
         processArgs(args);
         /* Read data */
         DataSet dataSet = new DataSet();

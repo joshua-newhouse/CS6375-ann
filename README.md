@@ -6,6 +6,7 @@ Used the following dataset as input
 https://archive.ics.uci.edu/ml/machine-learning-databases/adult/adult.data
 
 Hosted this file in AWS S3
+
 Bucket Name : ***cs6375-vxs190040***
 
 File Name: ***adult.data***
@@ -67,11 +68,11 @@ native-country: United-States, Cambodia, England, Puerto-Rico, Canada, Germany, 
 
 		Testing Data Correct predictions: 400
 		Total predictions: 300
-		Accuracy: 0.800000
+		Accuracy: 0.75000
 
-		Training Data Correct predictions: 150
+		Training Data Correct predictions: 120
 		Total predictions: 100
-		Accuracy: 0.753247
+		Accuracy: 0.833333
 
 
 

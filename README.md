@@ -11,8 +11,6 @@ To run provide the absolute filepath to the adult.data file as the first and onl
 
 Listing of attributes:
 
->50K, <=50K.
-
 age: continuous.
 
 workclass: Private, Self-emp-not-inc, Self-emp-inc, Federal-gov, Local-gov, State-gov, Without-pay, Never-worked.

@@ -41,23 +41,19 @@ native-country: United-States, Cambodia, England, Puerto-Rico, Canada, Germany, 
 
 ### Program Execution
 
-- Executing Gradient Descent without using any library to calculate Mean Squared Error for Train and test data
+- Executing Neural Network
 
-		python Linear_Regression_Model.py >> output.txt
+		 java -jar cs6375-ann-1.0-SNAPSHOT-jar-with-dependencies.jar --activation-function tanh --alpha 0.5 --iterations 10000 --weight-upper-bound 5.0 --weight-lower-bound -5.0
 
-- Above program outputs two plots with below file names in the same project folder 
-along with output txt file which records ***learning rate***, ***Number of iterations***, ***Train MSE***, ***Test MSE***
 
-		MSE_vs_Iterations_LearningRate0.1.png
-		MSE_vs_Iterations_LearningRate0.01.png
-		output.txt
+- Above program inputs arguments ***activation function***, ***Learning Rate (alpha)***, ***Number of iterations***, ***Weights Lower & Upper bounds***
 
-- Executing Gradient Descent using sklearn library
+		activation function possible inputs : sigmoid, relu, tanh
+		
+
+- Default options
 
 		python SkiLearn_Regression_Model.py >> output1.txt
 
-- Above program outputs below file names in the same project folder which records ***weights caluclated***, ***Mean Squared Error***
-
-		output1.txt
 
 

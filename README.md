@@ -66,12 +66,12 @@ native-country: United-States, Cambodia, England, Puerto-Rico, Canada, Germany, 
 
 - Sample output for this program
 
-		Testing Data Correct predictions: 400
-		Total predictions: 300
+		Testing Data Correct predictions: 300
+		Total predictions: 400
 		Accuracy: 0.75000
 
-		Training Data Correct predictions: 120
-		Total predictions: 100
+		Training Data Correct predictions: 100
+		Total predictions: 120
 		Accuracy: 0.833333
 
 

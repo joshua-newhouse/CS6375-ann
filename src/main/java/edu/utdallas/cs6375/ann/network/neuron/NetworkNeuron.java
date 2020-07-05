@@ -50,7 +50,7 @@ public abstract class NetworkNeuron extends Neuron {
     }
 
     public void updateWeights(double alpha) {
-        inputNeuronWeights.replaceAll((neuron, weight) -> weight - alpha * this.delta * neuron.getOutput());
+        inputNeuronWeights.replaceAll((neuron, weight) -> weight + alpha * this.delta * neuron.getOutput());
     }
 
     public double getDelta() {

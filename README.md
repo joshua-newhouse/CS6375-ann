@@ -47,7 +47,7 @@ native-country: United-States, Cambodia, England, Puerto-Rico, Canada, Germany, 
 
 - Executing Neural Network with inputs
 
-		 java -jar ccs6375-ann-1.0.jar --activation-function tanh --alpha 0.5 --iterations 10000 --weight-upper-bound 5.0 --weight-lower-bound -5.0 --layer-width 5 --hidden-layers 2
+		 java -jar cs6375-ann-1.0.jar --activation-function tanh --alpha 0.5 --iterations 10000 --weight-upper-bound 5.0 --weight-lower-bound -5.0 --layer-width 5 --hidden-layers 2
 
 - Executing Neural Network without inputs
 

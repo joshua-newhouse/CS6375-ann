@@ -6,8 +6,9 @@ Used the following dataset as input
 https://archive.ics.uci.edu/ml/machine-learning-databases/adult/adult.data
 
 Hosted this file in AWS S3
-Bucket Name : cs6375-vxs190040
-File Name: adult.data
+Bucket Name : ***cs6375-vxs190040***
+
+File Name: ***adult.data***
 
 #### Attribute Information:
 
